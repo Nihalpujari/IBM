@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 import mysql.connector
 from flask_cors import CORS  # Import CORS to handle cross-origin requests
 import os
@@ -6,13 +6,16 @@ import os
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
+# Set secret key for session management
+app.secret_key = os.getenv("f855374e3901ce6fe290de6e4414fc6c69c173ac778af004b8af824ecf3cda5f", "fallback-secret-key")
+
 def get_db_connection():
     try:
         connection = mysql.connector.connect(
-            host=os.getenv("DB_HOST", "localhost"),
-            user=os.getenv("DB_USER", "root"),
-            password=os.getenv("DB_PASSWORD", "2309"),
-            database=os.getenv("DB_NAME", "healthcare_system")
+            host=os.getenv("localhost"),
+            user=os.getenv("root"),
+            password=os.getenv("2309"),
+            database=os.getenv("healthcare_system")
         )
         return connection
     except mysql.connector.Error as err:
